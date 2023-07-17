@@ -5,3 +5,7 @@ EventFlow es un sistema de gestión de reserva de eventos en donde se podrán al
 
 ## Estructura del backend
 La estructura del backend que voy a entregar será las tablas de usuario, evento y reserva con sus respectivas relaciones y enrutado para acceder a la información desde cualquiera de estas 3 entidades.
+
+# Esquema de la base de datos:
+
+![Alt text](./resources/esquema.png)

@@ -1,0 +1,29 @@
+{
+  "name": "eventflow",
+  "version": "1.0.0",
+  "description": "EventFlow es un sistema de gestión de reserva de eventos en donde se podrán almacenar los mismos con sus respectivos datos (capacidad, tarifa, ubicación, categoría...). Los usuarios podrán hacer reservas y se podrá acceder a la información respectiva desde cualquiera de las entidades.",
+  "main": "index.js",
+  "scripts": {
+    "tsc": "tsc -w",
+    "start:dev": "ts-node-dev ./src/index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/express": "4.16.1",
+    "@types/express-routemap": "1.1.1",
+    "class": "0.1.4",
+    "class-transformer": "0.5.1",
+    "class-validator": "0.14.0",
+    "express-routemap": "1.6.0",
+    "reflect-metadata": "0.1.13",
+    "ts-node-dev": "2.0.0",
+    "typescript": "5.1.6"
+  },
+  "dependencies": {
+    "dotenv": "16.3.1",
+    "express": "4.18.2",
+    "mysql2": "3.5.1"
+  }
+}

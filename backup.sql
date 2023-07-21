@@ -16,13 +16,13 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `categoria`
+-- Table structure for table `categoria_evento`
 --
 
-DROP TABLE IF EXISTS `categoria`;
+DROP TABLE IF EXISTS `categoria_evento`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `categoria` (
+CREATE TABLE `categoria_evento` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(25) NOT NULL,
   `descripcion` varchar(255) DEFAULT NULL,
@@ -31,12 +31,36 @@ CREATE TABLE `categoria` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `categoria`
+-- Dumping data for table `categoria_evento`
 --
 
-LOCK TABLES `categoria` WRITE;
-/*!40000 ALTER TABLE `categoria` DISABLE KEYS */;
-/*!40000 ALTER TABLE `categoria` ENABLE KEYS */;
+LOCK TABLES `categoria_evento` WRITE;
+/*!40000 ALTER TABLE `categoria_evento` DISABLE KEYS */;
+/*!40000 ALTER TABLE `categoria_evento` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `datos_usuario`
+--
+
+DROP TABLE IF EXISTS `datos_usuario`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `datos_usuario` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `correo` varchar(76) DEFAULT NULL,
+  `telefono` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `datos_usuario`
+--
+
+LOCK TABLES `datos_usuario` WRITE;
+/*!40000 ALTER TABLE `datos_usuario` DISABLE KEYS */;
+/*!40000 ALTER TABLE `datos_usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -81,7 +105,7 @@ CREATE TABLE `evento` (
   PRIMARY KEY (`id`),
   KEY `fk_evento_categoria` (`id_categoria`),
   KEY `fk_evento_ubicacion` (`id_ubicacion`),
-  CONSTRAINT `fk_evento_categoria` FOREIGN KEY (`id_categoria`) REFERENCES `categoria` (`id`),
+  CONSTRAINT `fk_evento_categoria` FOREIGN KEY (`id_categoria`) REFERENCES `categoria_evento` (`id`),
   CONSTRAINT `fk_evento_ubicacion` FOREIGN KEY (`id_ubicacion`) REFERENCES `ubicacion` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -139,10 +163,7 @@ CREATE TABLE `tipo_ubicacion` (
   `id` int NOT NULL AUTO_INCREMENT,
   `nombre` varchar(25) NOT NULL,
   `descripcion` varchar(255) NOT NULL,
-  `id_categoria` int NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_tipo_categoria` (`id_categoria`),
-  CONSTRAINT `fk_tipo_categoria` FOREIGN KEY (`id_categoria`) REFERENCES `categoria` (`id`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -194,9 +215,10 @@ DROP TABLE IF EXISTS `usuario`;
 CREATE TABLE `usuario` (
   `id` int NOT NULL AUTO_INCREMENT,
   `nombre` varchar(45) NOT NULL,
-  `correo` varchar(76) NOT NULL,
-  `telefono` varchar(20) NOT NULL,
-  PRIMARY KEY (`id`)
+  `id_datos` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_usuario_datos` (`id_datos`),
+  CONSTRAINT `fk_usuario_datos` FOREIGN KEY (`id_datos`) REFERENCES `datos_usuario` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -218,4 +240,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-07-17  9:19:59
+-- Dump completed on 2023-07-21  7:52:24

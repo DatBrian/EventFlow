@@ -8,4 +8,4 @@ La estructura del backend que voy a entregar será las tablas de usuario, evento
 
 # Esquema de la base de datos:
 
-![Alt text](./resources/esquema.png)
+![esquema](./resources/esquema.png)

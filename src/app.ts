@@ -5,6 +5,7 @@ import env from "./config/EnvConfig";
 import chalk from "chalk";
 import { PoolConnection } from "mysql2/promise";
 import { Connection } from "./db/ConnectionDB";
+import cookieParser from 'cookie-parser';
 
 
 class App extends Connection {
@@ -49,6 +50,7 @@ class App extends Connection {
 
     private initMiddlewares() {
         this.app.use(express.json());
+        this.app.use(cookieParser());
     }
 
     private initRoutes(routes: RoutesInterface[]) {

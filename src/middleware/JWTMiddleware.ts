@@ -5,13 +5,14 @@ import env from "../config/EnvConfig";
 class JWTMiddleware {
     async excecute(req: Request, res: Response, next: NextFunction) {
         try {
+            //* Generando el JWT
             const encoder = new TextEncoder();
             const jwt = await new SignJWT({ ...req.params })
                 .setProtectedHeader({ alg: 'HS256', typ: 'JWT' })
                 .setIssuedAt()
                 .setExpirationTime('1h')
                 .sign(encoder.encode(env.JWT_PRIVATE_KEY));
-
+            //* Guardando el JWT generado en una cookie
             res.cookie('token', jwt, { httpOnly: true });
             next();
         } catch (error: any) {

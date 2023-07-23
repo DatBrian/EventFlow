@@ -36,7 +36,7 @@ abstract class QueriesCommon<InputDTO extends DTO, OutputDTO extends DTO> extend
         SELECT ${queryParams.select ?? "*"}
         FROM ${queryParams.table}
         ${queryParams.joins ?? ""}
-        WHERE id = ? ${queryParams.where ?? ""}
+        WHERE id = ${queryParams.where ?? ""}
         `;
 
         try {
@@ -66,7 +66,7 @@ abstract class QueriesCommon<InputDTO extends DTO, OutputDTO extends DTO> extend
         try {
             const connect = await this.connect;
             await connect.query<RowDataPacket[]>(query, values);
-            return `${queryParams.table} inseertado correrctamente :D`;
+            return `Insertado correrctamente :D`;
         } catch (error) {
             console.error("Error executing query:", error);
             throw new Error("Error executing query");
@@ -89,7 +89,7 @@ abstract class QueriesCommon<InputDTO extends DTO, OutputDTO extends DTO> extend
         try {
             const connect = await this.connect;
             await connect.query<RowDataPacket[]>(query, values);
-            return `${queryParams.table} actualizado correctamente :D`;
+            return `Actualizado correctamente :D`;
         } catch (error) {
             console.error("Error executing query:", error);
             throw new Error("Error executing query");
@@ -98,14 +98,14 @@ abstract class QueriesCommon<InputDTO extends DTO, OutputDTO extends DTO> extend
         }
     }
 
-    protected async delete(id: number, queryParams: QueryParams): Promise<string> {
+    protected async delete(queryParams: QueryParams): Promise<string> {
         const connection = await dataSource.getConnection();
         const query = `
         DELETE FROM ${queryParams.table}
-        WHERE id = ?`;
+        WHERE id = ${queryParams.where}`;
         try {
             const connect = await this.connect;
-            await connect.query<RowDataPacket[]>(query, [id]);
+            await connect.query<RowDataPacket[]>(query, [queryParams.where]);
             return `${queryParams.table} eliminado correctamnte :D`;
         } catch (error) {
             console.error("Error executing query:", error);

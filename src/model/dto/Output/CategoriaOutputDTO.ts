@@ -4,15 +4,15 @@ class CategoriaOutputDTO {
     @Expose({ name: "nombre" })
     public name;
 
-    @Expose({ name: "descipcion" })
+    @Expose({ name: "descripcion" })
     public description;
 
     constructor(
         nombre: string,
-        descipcion: string,
+        descripcion: string,
     ) {
         this.name = nombre;
-        this.description = descipcion;
+        this.description = descripcion;
     }
 }
 export default CategoriaOutputDTO;

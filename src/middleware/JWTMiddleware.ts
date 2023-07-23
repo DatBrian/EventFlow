@@ -3,11 +3,11 @@ import { SignJWT } from 'jose';
 import env from "../config/EnvConfig";
 
 class JWTMiddleware {
-    async excecute(req: Request, res: Response, next: NextFunction) {
+    async execute(req: Request, res: Response, next: NextFunction) {
         try {
             //* Generando el JWT
             const encoder = new TextEncoder();
-            const jwt = await new SignJWT({ ...req.params })
+            const jwt = await new SignJWT({ ...req.body })
                 .setProtectedHeader({ alg: 'HS256', typ: 'JWT' })
                 .setIssuedAt()
                 .setExpirationTime('1h')

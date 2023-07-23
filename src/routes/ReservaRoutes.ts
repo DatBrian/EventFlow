@@ -29,6 +29,14 @@ class ReservaRoutes extends RouterCommon<ReservaController, ValidateMiddlewareDT
             (req, res) => {
                 this.controller.getReservaById(req, res);
             });
+        this.router.get(`${this.path}/user/id`,
+            (req, res, next) => {
+                ValidateMiddlewareDTO.validator(req, res, next, ParamsInputDTO);
+            },
+            JWTMiddleware.execute,
+            (req, res) => {
+                this.controller.getUserReservations(req, res);
+            });
         this.router.post(`${this.path}/create`,
             (req, res, next) => {
                 ValidateMiddlewareDTO.validator(req, res, next, ReservaInputDTO);

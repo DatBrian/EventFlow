@@ -9,6 +9,8 @@ class ReservaServices {
         this.repository = reservaRepository;
     }
 
+    //* Métodos CRUD
+
     public async getAllReservas(): Promise<ReservaOutputDTO[]> {
         try {
             return await this.repository.getAllReservas();
@@ -54,6 +56,18 @@ class ReservaServices {
             const body = await verifyJWT(token);
             const id = await body.id;
             return await this.repository.deleteReserva(id);
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    //* EndPoints Adicionales
+
+    public async getUserReservations(token: string): Promise<ReservaOutputDTO[]> {
+        try {
+            const body = await verifyJWT(token);
+            const id = await body.id;
+            return await this.repository.getUserReservations(id);
         } catch (error) {
             throw error;
         }

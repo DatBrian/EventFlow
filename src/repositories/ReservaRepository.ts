@@ -18,6 +18,8 @@ class ReservaRepository extends QueriesCommon<ReservaInputDTO, ReservaOutputDTO>
         );
     }
 
+    //* Métodos CRUD
+
     public async getAllReservas(): Promise<ReservaOutputDTO[]> {
         const queryParams = {
             select: `${this.table}.*, evento.nombre AS evento, usuario.nombre AS usuario, estado.nombre AS estado`,
@@ -86,6 +88,25 @@ class ReservaRepository extends QueriesCommon<ReservaInputDTO, ReservaOutputDTO>
         } catch (error) {
             console.error("Error al eliminar el Reserva:", error);
             throw new Error("Error al eliminar el Reserva");
+        }
+    }
+
+    //* EndPoints Adicionales
+
+    public async getUserReservations(id: any): Promise<ReservaOutputDTO[]> {
+        const queryParams = {
+            select: `${this.table}.*, evento.nombre AS evento, usuario.nombre AS usuario, estado.nombre AS estado`,
+            joins: `JOIN evento ON reserva.id_evento = evento.id
+                    JOIN usuario ON reserva.id_usuario = usuario.id
+                    JOIN estado_reserva AS estado ON reserva.id_estado = estado.id`,
+            table: this.table,
+            where: `WHERE id_usuario = ${id}`
+        };
+        try {
+            return await this.getAll(queryParams);
+        } catch (error) {
+            console.error("Error al obtener las reservas de ese usuario:", error);
+            throw new Error("Error al obtener las reservas de ese usuario");
         }
     }
 }

@@ -9,13 +9,15 @@ export class ReservaController {
         this.cookie = 'token';
     }
 
+    //* Métodos CRUD
+
     public getAllReserva = async (_req: Request, res: Response) => {
         try {
             const Reservas = await this.service.getAllReservas();
             res.json(Reservas);
         } catch (error) {
-            console.error('Error al obtener las categorías:', error);
-            res.status(500).json({ error: 'Ocurrió un error al obtener las categorías, revise la consola para más información' });
+            console.error('Error al obtener las reservass:', error);
+            res.status(500).json({ error: 'Ocurrió un error al obtener las reservass, revise la consola para más información' });
 
         }
     }
@@ -27,8 +29,8 @@ export class ReservaController {
             res.clearCookie(this.cookie);
             res.json(Reserva);
         } catch (error) {
-            console.error('Error al obtener la categoría:', error);
-            res.status(500).json({ error: 'Ocurrió un error al obtener la categoría, revise la consola para más información' });
+            console.error('Error al obtener la reserva:', error);
+            res.status(500).json({ error: 'Ocurrió un error al obtener la reserva, revise la consola para más información' });
         }
     }
 
@@ -39,8 +41,8 @@ export class ReservaController {
             res.clearCookie(this.cookie);
             res.json(newReserva);
         } catch (error) {
-            console.error('Error al insertar la categoría:', error);
-            res.status(500).json({ error: 'Ocurrió un error al insertar la categoría, revise la consola para más información' });
+            console.error('Error al insertar la reserva:', error);
+            res.status(500).json({ error: 'Ocurrió un error al insertar la reserva, revise la consola para más información' });
         }
     }
 
@@ -51,8 +53,8 @@ export class ReservaController {
             res.clearCookie(this.cookie);
             res.json(updated)
         } catch (error) {
-            console.error('Error al actualizar la categoría:', error);
-            res.status(500).json({ error: 'Ocurrió un error al actualizar la categoría, revise la consola para más información' });
+            console.error('Error al actualizar la reserva:', error);
+            res.status(500).json({ error: 'Ocurrió un error al actualizar la reserva, revise la consola para más información' });
         }
     }
 
@@ -63,8 +65,22 @@ export class ReservaController {
             res.clearCookie(this.cookie)
             res.json(deleted)
         } catch (error) {
-            console.error('Error al eliminar la categoría:', error);
-            res.status(500).json({ error: 'Ocurrió un error al eliminar la categoría, revise la consola para más información' });
+            console.error('Error al eliminar la reserva:', error);
+            res.status(500).json({ error: 'Ocurrió un error al eliminar la reserva, revise la consola para más información' });
+        }
+    }
+
+    //* EndPoints Adicionales
+
+    public getUserReservations = async (req: Request, res: Response) => {
+        try {
+            const token = await req.cookies.token;
+            const reservas = await this.service.getUserReservations(token);
+            res.clearCookie(this.cookie);
+            res.json(reservas);
+        } catch (error) {
+            console.error('Error al obtener las reservas de ese usuario:', error);
+            res.status(500).json({ error: 'Ocurrió un error al obtener las reservas de ese usuario, revise la consola para más información' });
         }
     }
 }

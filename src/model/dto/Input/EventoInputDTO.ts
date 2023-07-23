@@ -9,7 +9,7 @@ class EventoInputDTO {
             ? value
             : (() => { throw new Error(`El parámetro "description" proporcionado no es válido, no puede exceder de los 255 caracteres`); })();
     }, { toClassOnly: true })
-    public descripcion:string;
+    public descripcion: string;
 
     @Expose({ name: 'capacity' })
     @IsNumberString()
@@ -43,7 +43,7 @@ class EventoInputDTO {
     @Transform(({ value }) => {
         return /^\d{4}-\d{2}-\d{2}$/.test(value)
             ? value
-            : (() => { throw new Error(`El parámetro "date" proporcionado no es válido, ingrese una fecha válida >:(`); })();
+            : (() => { throw new Error(`El parámetro "date" proporcionado no es válido, ingrese una fecha válida (AAAA-MM-DD) >:(`); })();
     }, { toClassOnly: true })
     public fecha: string;
 

@@ -15,7 +15,7 @@ export class CategoriaController {
             res.json(categorias);
         } catch (error) {
             console.error('Error al obtener las categorías:', error);
-            res.status(500).json({ error: 'Ocurrió un error al obtener las categorías' });
+            res.status(500).json({ error: 'Ocurrió un error al obtener las categorías, revise la consola para más información' });
 
         }
     }
@@ -28,7 +28,7 @@ export class CategoriaController {
             res.json(categoria);
         } catch (error) {
             console.error('Error al obtener la categoría:', error);
-            res.status(500).json({ error: 'Ocurrió un error al obtener la categoría' });
+            res.status(500).json({ error: 'Ocurrió un error al obtener la categoría, revise la consola para más información' });
         }
     }
 
@@ -40,7 +40,7 @@ export class CategoriaController {
             res.json(newCategoria);
         } catch (error) {
             console.error('Error al insertar la categoría:', error);
-            res.status(500).json({ error: 'Ocurrió un error al insertar la categoría' });
+            res.status(500).json({ error: 'Ocurrió un error al insertar la categoría, revise la consola para más información' });
         }
     }
 
@@ -52,7 +52,7 @@ export class CategoriaController {
             res.json(updated)
         } catch (error) {
             console.error('Error al actualizar la categoría:', error);
-            res.status(500).json({ error: 'Ocurrió un error al actualizar la categoría' });
+            res.status(500).json({ error: 'Ocurrió un error al actualizar la categoría, revise la consola para más información' });
         }
     }
 
@@ -64,7 +64,7 @@ export class CategoriaController {
             res.json(deleted)
         } catch (error) {
             console.error('Error al eliminar la categoría:', error);
-            res.status(500).json({ error: 'Ocurrió un error al eliminar la categoría' });
+            res.status(500).json({ error: 'Ocurrió un error al eliminar la categoría, revise la consola para más información' });
         }
     }
 }

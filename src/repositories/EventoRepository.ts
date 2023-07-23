@@ -126,6 +126,38 @@ class EventoRepository extends QueriesCommon<EventoInputDTO, EventoOutputDTO>{
             throw new Error("Error al obtener los detalles del evento");
         }
     }
+
+    public async getEventsByUbication(ubication: any): Promise<EventoOutputDTO[]> {
+        const queryParams = {
+            select: `${this.table}.*, ubicacion.nombre, categoria.nombre`,
+            joins: `JOIN ubicacion ON evento.id_ubicacion = ubicacion.id
+                    JOIN categoria_evento AS categoria ON evento.id_categoria = categoria.id`,
+            table: this.table,
+            where: `WHERE ubicacion.nombre = '${ubication}'`
+        };
+        try {
+            return await this.getAll(queryParams);
+        } catch (error) {
+            console.error("Error al obtener los eventos de esa ubicación:", error);
+            throw new Error("Error al obtener los eventos de esa ubicación");
+        }
+    }
+
+    public async getEventsByCategory(category: any): Promise<EventoOutputDTO[]> {
+        const queryParams = {
+            select: `${this.table}.*, ubicacion.nombre, categoria.nombre`,
+            joins: `JOIN ubicacion ON evento.id_ubicacion = ubicacion.id
+                    JOIN categoria_evento AS categoria ON evento.id_categoria = categoria.id`,
+            table: this.table,
+            where: `WHERE categoria.nombre = '${category}'`
+        };
+        try {
+            return await this.getAll(queryParams);
+        } catch (error) {
+            console.error("Error al obtener los eventos de esa categoría:", error);
+            throw new Error("Error al obtener los eventos de esa categoría");
+        }
+    }
 }
 
 export default EventoRepository;

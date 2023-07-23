@@ -93,6 +93,30 @@ export class EventoController {
             res.status(500).json({ error: 'Ocurrió un error al obtener los detalles del evento, revise la consola para más información' });
         }
     }
+
+    public getEventsByUbication = async (req: Request, res: Response) => {
+        try {
+            const token = await req.cookies.token;
+            const events = await this.service.getEventsByUbication(token);
+            res.clearCookie(this.cookie);
+            res.json(events);
+        } catch (error) {
+            console.error('Error al obtener los eventos de esa ubicación:', error);
+            res.status(500).json({ error: 'Ocurrió un error al obtener los eventos de esa ubicación, revise la consola para más información' });
+        }
+    }
+
+    public getEventsByCategory = async (req: Request, res: Response) => {
+        try {
+            const token = await req.cookies.token;
+            const events = await this.service.getEventsByCategory(token);
+            res.clearCookie(this.cookie);
+            res.json(events);
+        } catch (error) {
+            console.error('Error al obtener los eventos de esa categoría:', error);
+            res.status(500).json({ error: 'Ocurrió un error al obtener los eventos de esa categoría, revise la consola para más información' });
+        }
+    }
 }
 export default EventoController
 export const eventoController = new EventoController();

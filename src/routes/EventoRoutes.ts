@@ -38,6 +38,22 @@ class EventoRoutes extends RouterCommon<EventoController, ValidateMiddlewareDTO>
             (req, res) => {
                 this.controller.getEventDetails(req, res);
             });
+        this.router.get(`${this.path}/ubication`,
+            (req, res, next) => {
+                ValidateMiddlewareDTO.validator(req, res, next, ParamsInputDTO);
+            },
+            JWTMiddleware.execute,
+            (req, res) => {
+                this.controller.getEventsByUbication(req, res);
+            });
+        this.router.get(`${this.path}/category`,
+            (req, res, next) => {
+                ValidateMiddlewareDTO.validator(req, res, next, ParamsInputDTO);
+            },
+            JWTMiddleware.execute,
+            (req, res) => {
+                this.controller.getEventsByCategory(req, res);
+            });
         this.router.post(`${this.path}/create`,
             (req, res, next) => {
                 ValidateMiddlewareDTO.validator(req, res, next, EventoInputDTO);

@@ -2,6 +2,15 @@ import { Expose, Transform } from "class-transformer";
 import { IsNumberString, IsString } from "class-validator";
 
 class EventoInputDTO {
+    @Expose({ name: "name" })
+    @IsString()
+    @Transform(({ value }) => {
+        return /^.{1,25}$/.test(value)
+            ? value
+            : (() => { throw new Error(`El parámetro "name" proporcionado no es válido, no puede exceder de los 255 caracteres`); })();
+    }, { toClassOnly: true })
+    public nombre: string;
+
     @Expose({ name: "description" })
     @IsString()
     @Transform(({ value }) => {
@@ -57,6 +66,7 @@ class EventoInputDTO {
     public id_categoria: number;
 
     constructor(
+        name: string,
         description: string,
         capacity: number,
         fee: number,
@@ -64,6 +74,7 @@ class EventoInputDTO {
         date: string,
         category: number
     ) {
+        this.nombre = name;
         this.descripcion = description;
         this.cupos = capacity;
         this.tarifa = fee;

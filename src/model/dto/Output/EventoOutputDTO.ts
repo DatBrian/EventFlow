@@ -2,6 +2,9 @@ import { Expose } from "class-transformer";
 import { IsOptional } from "class-validator";
 
 class EventoInputDTO {
+    @Expose({ name: "nombre" })
+    public name: string;
+
     @Expose({ name: "descripcion" })
     public description: string;
 
@@ -29,6 +32,7 @@ class EventoInputDTO {
     public category: number;
 
     constructor(
+        nombre: string,
         descripcion: string,
         cupos: number,
         tarifa: number,
@@ -38,6 +42,7 @@ class EventoInputDTO {
         fecha: string,
         categoria: number
     ) {
+        this.name = nombre;
         this.description = descripcion;
         this.capacity = cupos;
         this.fee = tarifa;

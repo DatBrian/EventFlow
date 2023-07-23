@@ -81,6 +81,26 @@ class EventoServices {
         }
     }
 
+    public async getEventsByUbication(token: string): Promise<EventoOutputDTO[]> {
+        try {
+            const body = await verifyJWT(token);
+            const ubication = await body.ubication;
+            return await this.repository.getEventsByUbication(ubication);
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    public async getEventsByCategory(token: string): Promise<EventoOutputDTO[]> {
+        try {
+            const body = await verifyJWT(token);
+            const category = await body.category;
+            return await this.repository.getEventsByCategory(category);
+        } catch (error) {
+            throw error;
+        }
+    }
+
 }
 export default EventoServices;
 export const eventoService = new EventoServices();

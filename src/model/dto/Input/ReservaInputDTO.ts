@@ -32,7 +32,7 @@ class ReservaInputDTO {
     @Expose({ name: "estado" })
     @IsString()
     @Transform(({ value }) => {
-        return /^\d{4}-\d{2}-\d{2}$/.test(value)
+        return /^[0-9]+$/.test(value)
             ? value
             : (() => { throw new Error(`El parámetro "estado" proporcionado no es válido, ingrese un número entero >:(`); })();
     }, { toClassOnly: true })

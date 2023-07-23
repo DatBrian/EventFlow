@@ -1,32 +1,32 @@
 import { Expose } from "class-transformer";
 
 class ReservaOutputDTO {
-    @Expose({ name: 'id_evento' })
-    public evento: number;
+    @Expose({ name: 'evento' })
+    public evento: string;
 
-    @Expose({ name: 'id_usuario' })
-    public usuario: number;
+    @Expose({ name: 'usuario' })
+    public usuario: string;
 
     @Expose({ name: 'fecha' })
     public date: string;
 
-    @Expose({ name: "id_estado" })
-    public estado: number;
+    @Expose({ name: "estado" })
+    public estado: string;
 
     @Expose({ name: 'entradas' })
     public tickets: number;
 
     constructor(
-        id_evento: number,
-        id_usuario: number,
+        evento: string,
+        usuario: string,
         fecha: string,
-        id_estado: number,
+        estado: string,
         entradas: number
     ) {
-        this.evento = id_evento;
-        this.usuario = id_usuario;
+        this.evento = evento;
+        this.usuario = usuario;
         this.date = fecha;
-        this.estado = id_estado;
+        this.estado = estado;
         this.tickets = entradas;
     }
 }

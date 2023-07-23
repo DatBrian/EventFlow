@@ -5,7 +5,7 @@ import QueryParams from "../interfaces/QueryParamsInterface";
 
 type DTO = { [key: string]: any };
 
-abstract class QueriesCommon<InputDTO extends DTO, OutputDTO extends DTO[]> extends Connection {
+abstract class QueriesCommon<InputDTO extends DTO, OutputDTO extends DTO> extends Connection {
 
     protected async getAll(queryParams: QueryParams): Promise<OutputDTO[]> {
         const connection = await dataSource.getConnection();

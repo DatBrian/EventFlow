@@ -10,29 +10,29 @@ class EventoInputDTO {
     @Expose({ name: 'tarifa' })
     public fee: number;
 
-    @Expose({ name: 'id_ubicacion' })
-    public id_ubicacion: number;
+    @Expose({ name: 'ubicacion' })
+    public ubicacion: number;
 
     @Expose({ name: "fecha" })
     public date: string;
 
-    @Expose({ name: 'id_categoria' })
+    @Expose({ name: 'categoria' })
     public category: number;
 
     constructor(
         descripcion: string,
         cupos: number,
         tarifa: number,
-        id_ubicacion: number,
+        ubicacion: number,
         fecha: string,
-        id_categoria: number
+        categoria: number
     ) {
         this.description = descripcion;
         this.capacity = cupos;
         this.fee = tarifa;
-        this.id_ubicacion = id_ubicacion;
+        this.ubicacion = ubicacion;
         this.date = fecha;
-        this.category = id_categoria;
+        this.category = categoria;
     }
 }
 export default EventoInputDTO;

@@ -35,7 +35,7 @@ class EventoRepository extends QueriesCommon<EventoInputDTO, EventoOutputDTO>{
 
     public async getEventoById(id: any): Promise<EventoOutputDTO | null> {
         const queryParams = {
-            select: `${this.table}.*, ubicacion.nombre, categoria.nombre`,
+            select: `${this.table}.*, ubicacion.nombre AS ubicacion, categoria.nombre AS categoria`,
             joins: `JOIN ubicacion ON evento.id_ubicacion = ubicacion.id
                     JOIN categoria_evento AS categoria ON evento.id_categoria = categoria.id`,
             table: this.table,

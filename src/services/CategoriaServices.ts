@@ -31,7 +31,7 @@ class CategoriaServices {
     public async insertCategoria(token: string): Promise<string> {
 
         try {
-            return await this.repository.insertCategoria(verifyJWT(token));
+            return await this.repository.insertCategoria(await verifyJWT(token));
         } catch (error) {
             throw error;
         }

@@ -4,15 +4,20 @@ class UsuarioOutputDTO {
     @Expose({ name: "nombre" })
     public name;
 
-    @Expose({ name: 'id_datos' })
-    public id_datos: number;
+    @Expose({ name: 'correo' })
+    public mail: string;
+
+    @Expose({ name: 'telefono' })
+    public phone: string;
 
     constructor(
         nombre: string,
-        id_datos: number,
+        correo: string,
+        telefono: string,
     ) {
         this.name = nombre;
-        this.id_datos = id_datos;
+        this.mail = correo;
+        this.phone = telefono
     }
 }
 export default UsuarioOutputDTO;

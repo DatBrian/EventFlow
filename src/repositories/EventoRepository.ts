@@ -12,11 +12,15 @@ class EventoRepository extends QueriesCommon<EventoInputDTO, EventoOutputDTO>{
         super();
     }
 
+    //? Función requerida por MethodsCommon para pasar los objetos al dto
+
     protected mapRowToDTO(rows: RowDataPacket[]): EventoOutputDTO[] {
         return rows.map((row) =>
             plainToClass(EventoOutputDTO, row, { excludeExtraneousValues: true })
         );
     }
+
+    //* Métodos CRUD
 
     public async getAllEventos(): Promise<EventoOutputDTO[]> {
         const queryParams = {
@@ -84,6 +88,42 @@ class EventoRepository extends QueriesCommon<EventoInputDTO, EventoOutputDTO>{
         } catch (error) {
             console.error("Error al eliminar el Evento:", error);
             throw new Error("Error al eliminar el Evento");
+        }
+    }
+
+    //* EndPoints Adicionales
+
+    public async getAllEventDetails(): Promise<EventoOutputDTO[]> {
+        const queryParams = {
+            select: `${this.table}.*, ubicacion.*, ubicacion.nombre AS ubicacion, ubicacion.descripcion AS detalles_ubicacion, tipo_ubicacion.nombre AS tipo_ubicacion, categoria.nombre AS categoria`,
+            joins: `JOIN ubicacion ON evento.id_ubicacion = ubicacion.id
+                    JOIN tipo_ubicacion ON ubicacion.id_tipo_ubicacion = tipo_ubicacion.id
+                    JOIN categoria_evento AS categoria ON evento.id_categoria = categoria.id`,
+            table: this.table,
+        };
+        try {
+            return await this.getAll(queryParams);
+        } catch (error) {
+            console.error("Error al obtener los detalles de los eventos:", error);
+            throw new Error("Error al obtener los detalles de los eventos");
+
+        }
+    }
+
+    public async getEventDetails(id: any): Promise<EventoOutputDTO | null> {
+        const queryParams = {
+            select: `${this.table}.*, ubicacion.*, ubicacion.nombre AS ubicacion, ubicacion.descripcion AS detalles_ubicacion, tipo_ubicacion.nombre AS tipo_ubicacion, categoria.nombre AS categoria`,
+            joins: `JOIN ubicacion ON evento.id_ubicacion = ubicacion.id
+                    JOIN tipo_ubicacion ON ubicacion.id_tipo_ubicacion = tipo_ubicacion.id
+                    JOIN categoria_evento AS categoria ON evento.id_categoria = categoria.id`,
+            table: this.table,
+            where: id.toString()
+        };
+        try {
+            return await this.getOneById(id, queryParams)
+        } catch (error) {
+            console.error("Error al obtener los detalles del evento:", error);
+            throw new Error("Error al obtener los detalles del evento");
         }
     }
 }

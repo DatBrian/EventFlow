@@ -9,6 +9,8 @@ class EventoServices {
         this.repository = eventoRepository;
     }
 
+    //* Métodos CRUD
+
     public async getAllEventos(): Promise<EventoOutputDTO[]> {
         try {
             return await this.repository.getAllEventos();
@@ -54,6 +56,26 @@ class EventoServices {
             const body = await verifyJWT(token);
             const id = await body.id;
             return await this.repository.deleteEvento(id);
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    //* EndPoints adicionales
+
+    public async getAllEventDetails(): Promise<EventoOutputDTO[]> {
+        try {
+            return await this.repository.getAllEventDetails();
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    public async getEventDetails(token: string): Promise<EventoOutputDTO | null> {
+        try {
+            const body = await verifyJWT(token);
+            const id = await body.id;
+            return await this.repository.getEventDetails(id)
         } catch (error) {
             throw error;
         }

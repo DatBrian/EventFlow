@@ -25,8 +25,6 @@ La estructura del backend que voy a entregar será las tablas de usuario, evento
 ### **Directorio Raíz:**
 #### En el directorio raíz se encuentran los archivos principales de configuración sin entrar aún al código.
 
-![Alt text](image.png)
-
 #### ![Alt text](./resources/screenshots/estructura.png)
 
 - #### La carpeta [node_modules](node_modules) es la que se creará al inicializar el proyecto y contiene todas los archivos necesarios para las dependencias que se vayan a utilizar.
@@ -43,7 +41,7 @@ La estructura del backend que voy a entregar será las tablas de usuario, evento
 ![Alt text](./resources//screenshots/src.png)
 
 - `index.ts`: Archivo principal que inicializa la aplicación y configura las rutas.
-- `app.ts`: Archivo principal que configura la aplicación Express y establece las rutas y middlewares.
+- `app.ts`: Archivo que configura la aplicación Express y inicializa las rutas y middlewares.
 - `common/`: Carpeta que contiene funciones comunes y una clase de enrutador común.
 - `config/`: Carpeta que contiene archivos de configuración, como `ConnectDataSource.ts` para la conexión a la base de datos y `EnvConfig.ts` para las variables de entorno.
 - `controllers/`: Carpeta que contiene los controladores de cada entidad, como `CitasController.ts`.
@@ -76,6 +74,10 @@ npm install
 
 6. Dentro del archivo **.evn** configura las variables de entorno según tus configuraciones siguiendo los ejemplos expuestos en el mismo.
 
+    Esto debería aparecer en el archivo [.env-example](.env-example):
+    ![env-example](resources/screenshots/envexample.png)
+    ***Se deben cambiar los datos de las variables de entorno por tus configuraciones para la base de datos que creaste en el paso 3***
+
 7. Ejecuta el siguiente comando para inicializar todos los servicios y en la consola se mostrarán las demás instrucciones:
 
 ```
@@ -98,6 +100,228 @@ npm run start:dev
 6. En el archivo de repositorio se realizará la respectiva consulta y esto devolverá la información necesaria la cual va a recorrer de nuevo toda la ruta anterior de manera inversa hasta mostrar los resultados.
 
 7. Desde el archivo de repositorio no se tocará la base de datos pero si se llamará a una clase MethodsCommon la cual contiene plantillas para realizar las consultas, cada una se llama desde el archivo de repositorio.
+
+## Validación con DTO:
+
+Para validar los datos de entrada y para cambiar los nombres de los datos de salida hacia y desde la base de datos se utilizó DTO con las dependencias mencionadas al inicio de esta documentación, a continuación se explicará como fué implementada.
+
+- Para empezar se crearon archivos DTO individuales dentro de la carpeta [dto](./src/model/dto), aqui se encuentran otras dos carpetas [input](./src/model/dto/Input/) y [Output](./src/model/dto/Output)
+
+![InputDTO](resources/screenshots/inputDTO.png)
+
+- Dentro de la carpeta [input](./src/model/dto/Input/) se encuentran todos los **DTO** de todas las entidades para validar datos de entrada, es decir los **POST** o **UPDATE**, a continuación se muestra un ejemplo de como se vería uno:
+
+    ```typescript
+    import { Expose, Transform } from "class-transformer";
+    import { IsNumberString, IsString } from "class-validator";
+
+    class EventoInputDTO {
+        @Expose({ name: "name" })
+        @IsString()
+        @Transform(({ value }) => {
+            return /^.{1,25}$/.test(value)
+                ? value
+                : (() => { throw new Error(`El parámetro "name" proporcionado no es válido, no puede
+                exceder de los 255 caracteres`); })();
+        }, { toClassOnly: true })
+        public nombre: string;
+
+        @Expose({ name: "description" })
+        @IsString()
+        @Transform(({ value }) => {
+            return /^.{1,255}$/.test(value)
+                ? value
+                : (() => { throw new Error(`El parámetro "description" proporcionado no es válido, no
+                puede exceder de los 255 caracteres`); })();
+        }, { toClassOnly: true })
+        public descripcion: string;
+
+        @Expose({ name: 'capacity' })
+        @IsNumberString()
+        @Transform(({ value }) => {
+            return /^[0-9]+$/.test(value)
+                ? value
+                : (() => { throw new Error("El parámetro capacity proporcionado no es un parámetro
+                válido, ingrese un número entero >:("); })();
+        }, { toClassOnly: true })
+        public cupos: number;
+
+        @Expose({ name: 'fee' })
+        @IsNumberString()
+        @Transform(({ value }) => {
+            return /^[0-9]+$/.test(value)
+                ? value
+                : (() => { throw new Error("El parámetro fee proporcionado no es un parámetro válido, 
+                ingrese un número entero >:("); })();
+        }, { toClassOnly: true })
+        public tarifa: number;
+
+        @Expose({ name: 'ubicacion' })
+        @IsNumberString()
+        @Transform(({ value }) => {
+            return /^[0-9]+$/.test(value)
+                ? value
+                : (() => { throw new Error("El parámetro ubicacion proporcionado no es un parámetro 
+                válido, ingrese un número entero >:("); })();
+        }, { toClassOnly: true })
+        public id_ubicacion: number;
+
+        @Expose({ name: "date" })
+        @IsString()
+        @Transform(({ value }) => {
+            return /^\d{4}-\d{2}-\d{2}$/.test(value)
+                ? value
+                : (() => { throw new Error(`El parámetro "date" proporcionado no es válido, ingrese 
+                una fecha válida (AAAA-MM-DD) >:(`); })();
+        }, { toClassOnly: true })
+        public fecha: string;
+
+        @Expose({ name: 'category' })
+        @IsNumberString()
+        @Transform(({ value }) => {
+            return /^[0-9]+$/.test(value)
+                ? value
+                : (() => { throw new Error("El parámetro category proporcionado no es un parámetro 
+                válido, ingrese un número entero >:("); })();
+        }, { toClassOnly: true })
+        public id_categoria: number;
+
+        constructor(
+            name: string,
+            description: string,
+            capacity: number,
+            fee: number,
+            ubicacion: number,
+            date: string,
+            category: number
+        ) {
+            this.nombre = name;
+            this.descripcion = description;
+            this.cupos = capacity;
+            this.tarifa = fee;
+            this.id_ubicacion = ubicacion;
+            this.fecha = date;
+            this.id_categoria = category;
+        }
+    }
+    export default EventoInputDTO;
+    ```
+
+    Aparte de estos DTO se encuentra uno para válidar otros datos enviados por body como parámetros necesarios para realizar consultas, aqui se muestra el archivo:
+
+    ```typescript
+    import { Expose, Transform } from "class-transformer";
+    import { IsNumber, IsString } from "class-validator";
+
+    class ParamsInputDTO {
+        @Expose({ name: 'id' })
+        @Transform(({ value }) => {
+            return /^[0-9]+$/.test(value) || typeof value === "undefined"
+                ? value
+                : (() => { throw new Error("El id proporcionado no es un parámetro válido, ingrese un 
+                número entero >:("); })();
+        }, { toClassOnly: true })
+        @IsNumber()
+        public id: number;
+
+        @Expose({ name: 'ubication' })
+        @IsString()
+        @Transform(({ value }) => {
+            return /^.{1,25}$/.test(value)
+                ? value
+                : (() => { throw new Error(`El parámetro "ubication" 
+                proporcionado no es válido, no 
+                puede exceder de los 25 caracteres`); })();
+        }, { toClassOnly: true })
+        public ubication: string
+
+        @Expose({ name: 'category' })
+        @IsString()
+        @Transform(({ value }) => {
+            return /^.{1,25}$/.test(value)
+                ? value
+                : (() => { throw new Error(`El parámetro "category" 
+                proporcionado no es válido, no 
+                puede exceder de los 25 caracteres`); })();
+        }, { toClassOnly: true })
+        public category: string
+
+        constructor(
+            id: number,
+            ubication: string,
+            category: string
+        ) {
+            this.id = id;
+            this.ubication = ubication;
+            this.category = category;
+        }
+    }
+    export default ParamsInputDTO;
+    ```
+    Como se puede ver en ambos DTO se utilizan las librerías con el decorador **@Expose()** para que se puedan ingresar datos con otros nombres distintos al de la base de datos y el decorador **@Transform** que permite hacer una validación personalizada del tipo de dato y del contenido que se debe recibir para realizar la consulta devolviendo un error personalizado según el dato que no haya pasado la validación.
+
+    ---
+
+- Dentro de la carpeta [Output](./src/model/dto/Output/) se encuentran todos los **DTO** de todas las entidades para validar datos de salida, es decir los datos traidos de las consultas **GET** para cambiar los nombres de las columnas de la base de datos, a continuación se muestra un ejemplo de como se vería uno:
+
+    ```typescript
+    import { Expose } from "class-transformer";
+
+    class CategoriaOutputDTO {
+        @Expose({ name: "nombre" })
+        public name;
+
+        @Expose({ name: "descripcion" })
+        public description;
+
+        constructor(
+            nombre: string,
+            descripcion: string,
+        ) {
+            this.name = nombre;
+            this.description = descripcion;
+        }
+    }
+    export default CategoriaOutputDTO;
+    ```
+    En los DTO para datos de salida no se realizan validaciones como en los de datos de entrada ya que solo se utiliza el decorador **@Expose** para cambiar los nombres de los datos recibidos desde la base de datos
+
+    ---
+
+- Ya definidos los archivos DTO estos pasarán serán procesados por el middleware [ValidateMiddlewareDTO](./src/middleware/ValidateMiddlewareDTO.ts) el cual contiene lo siguiente:
+
+    ```typescript
+    import { NextFunction, Request, Response } from "express";
+    import { plainToClass } from "class-transformer";
+    import { validate } from "class-validator";
+
+    class ValidateMiddlewareDTO {
+        constructor() { }
+
+        public static async validator(
+            req: Request,
+            res: Response,
+            next: NextFunction,
+            type: any
+        ) {
+            try {
+                const dto = plainToClass(type, req.body);
+                await validate(dto);
+                return ((req.body = dto), next());
+            } catch (error: any) {
+                console.error(error.message);
+                return res.status(500).json({ error: "Error en los 
+                parámetros de la consulta, revisa la consola para mas 
+                información" });
+            }
+        }
+    }
+    export default ValidateMiddlewareDTO;
+    ```
+    Este archivo se encarga de validar los datos con su respectivo **DTO** utilizando el método **validate()**, para esto es necesario pasar los datos y el **DTO** ingresados por el método **plainToClass()**. Este middleware debe llamarse en los archivos [routes](./src/routes) y a continuación se muestra un ejemplo de como debe llamarse:
+
+    ![Alt text](resources/screenshots/routevalidate.png)
+    Como se puede ver en la imagen se llama el método del middleware con los parámetros necesarios incluyendo el **DTO** a validar.
 
 # **EndPoints:**
 ### Todos los **EndPoints** disponibles se muestran en la consola al ejecutar el comando indicado en la sección de inicialización, a continuación se dará una breve explicacion de lo que hacen.
@@ -123,18 +347,18 @@ npm run start:dev
 
 ## POST
 
-- ### Todos los EndPoints **POST** cumplen la misma función de ingresar una nueva entidad, se pueden reconocer porque después del nombre de la entidadd tienen ***/create***.
+- #### Todos los EndPoints **POST** cumplen la misma función de ingresar una nueva entidad, se pueden reconocer porque después del nombre de la entidadd tienen ***/create***.
 
 ## PUT
 
-- ### Todos los EndPoints **PUT** cumplen la misma función de actualizar una dato de una entidad existente, se pueden reconocer porque después del nombre de la entidad tienen **/update**.
+- #### Todos los EndPoints **PUT** cumplen la misma función de actualizar una dato de una entidad existente, se pueden reconocer porque después del nombre de la entidad tienen **/update**.
 
 ## DELETE
 
-- ### Topos los EndPoints **DELETE** cumplen la misma función de eliminar alguna dato de una entidad, se pueden reconocer porque después del nombre de la entidad tienen **/delete**.
+- #### Topos los EndPoints **DELETE** cumplen la misma función de eliminar alguna dato de una entidad, se pueden reconocer porque después del nombre de la entidad tienen **/delete**.
 
 ## **Consumo:**
-### Para hacer los post es necesario pasar un cuerpo válido que pueda ser aceptado por la base de datos, estas estructuras para las peticiones están definidaas dentro de la caarpeta [entities](./src/model/entities) de la carpeta [model](./src/model/), allí se encontrarán todas las entidades asociadas a las tablas de la base de datos y pueden utilizarse para crear la petición de manera correcta, en todo caso al enviar datos erróneos se mostrarán excepciones con los detaalles y en casos de haber algun error en las entidades puedes consultas los archivos de **DTO** dentro de la misma carpeta [model](./src/model/).
+#### Para hacer los post es necesario pasar un cuerpo válido que pueda ser aceptado por la base de datos, estas estructuras para las peticiones están definidaas dentro de la caarpeta [entities](./src/model/entities) de la carpeta [model](./src/model/), allí se encontrarán todas las entidades asociadas a las tablas de la base de datos y pueden utilizarse para crear la petición de manera correcta, en todo caso al enviar datos erróneos se mostrarán excepciones con los detaalles y en casos de haber algun error en las entidades puedes consultas los archivos de **DTO** dentro de la misma carpeta [model](./src/model/).
 
 ---
 

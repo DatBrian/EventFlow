@@ -3,7 +3,7 @@ import RouterCommon from "../common/RouterCommon";
 import ValidateMiddlewareDTO from "../middleware/ValidateMiddlewareDTO";
 import UsuarioController, { usuarioController } from "../controller/UsuarioController";
 import UsuarioInputDTO from "../model/dto/Input/UsuarioInputDTO";
-import JWTMiddleware from "../middleware/JWTMiddleware";
+import EncryptDataMiddleware from "../middleware/EncryptDataMiddleware";
 import ParamsInputDTO from "../model/dto/Input/ParamsInputDTO";
 
 class UsuarioRoutes extends RouterCommon<UsuarioController, ValidateMiddlewareDTO>{
@@ -25,7 +25,7 @@ class UsuarioRoutes extends RouterCommon<UsuarioController, ValidateMiddlewareDT
             (req, res, next) => {
                 ValidateMiddlewareDTO.validator(req, res, next, ParamsInputDTO);
             },
-            JWTMiddleware.execute,
+            EncryptDataMiddleware.execute,
             (req, res) => {
                 this.controller.getUsuarioById(req, res);
             });
@@ -33,7 +33,7 @@ class UsuarioRoutes extends RouterCommon<UsuarioController, ValidateMiddlewareDT
             (req, res, next) => {
                 ValidateMiddlewareDTO.validator(req, res, next, UsuarioInputDTO);
             },
-            JWTMiddleware.execute,
+            EncryptDataMiddleware.execute,
             (req, res) => {
                 this.controller.insertUsuario(req, res);
             });
@@ -41,7 +41,7 @@ class UsuarioRoutes extends RouterCommon<UsuarioController, ValidateMiddlewareDT
             (req, res, next) => {
                 ValidateMiddlewareDTO.validator(req, res, next, UsuarioInputDTO);
             },
-            JWTMiddleware.execute,
+            EncryptDataMiddleware.execute,
             (req, res) => {
                 this.controller.updateUsuario(req, res)
             });
@@ -49,7 +49,7 @@ class UsuarioRoutes extends RouterCommon<UsuarioController, ValidateMiddlewareDT
             (req, res, next) => {
                 ValidateMiddlewareDTO.validator(req, res, next, ParamsInputDTO);
             },
-            JWTMiddleware.execute,
+            EncryptDataMiddleware.execute,
             (req, res) => {
                 this.controller.deleteUsuario(req, res);
             }

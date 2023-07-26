@@ -3,7 +3,7 @@ import RouterCommon from "../common/RouterCommon";
 import ValidateMiddlewareDTO from "../middleware/ValidateMiddlewareDTO";
 import CategoriaController, { categoriaController } from "../controller/CategoriaController";
 import CategoriaInputDTO from "../model/dto/Input/CategoriaInputDTO";
-import JWTMiddleware from "../middleware/JWTMiddleware";
+import EncryptDataMiddleware from "../middleware/EncryptDataMiddleware";
 import ParamsInputDTO from "../model/dto/Input/ParamsInputDTO";
 
 class CategoriaRoutes extends RouterCommon<CategoriaController, ValidateMiddlewareDTO>{
@@ -25,7 +25,7 @@ class CategoriaRoutes extends RouterCommon<CategoriaController, ValidateMiddlewa
             (req, res, next) => {
                 ValidateMiddlewareDTO.validator(req, res, next, ParamsInputDTO);
             },
-            JWTMiddleware.execute,
+            EncryptDataMiddleware.execute,
             (req, res) => {
                 this.controller.getCategoriaById(req, res);
             });
@@ -33,7 +33,7 @@ class CategoriaRoutes extends RouterCommon<CategoriaController, ValidateMiddlewa
             (req, res, next) => {
                 ValidateMiddlewareDTO.validator(req, res, next, CategoriaInputDTO);
             },
-            JWTMiddleware.execute,
+            EncryptDataMiddleware.execute,
             (req, res) => {
                 this.controller.insertCategoria(req, res);
             });
@@ -41,7 +41,7 @@ class CategoriaRoutes extends RouterCommon<CategoriaController, ValidateMiddlewa
             (req, res, next) => {
                 ValidateMiddlewareDTO.validator(req, res, next, CategoriaInputDTO);
             },
-            JWTMiddleware.execute,
+            EncryptDataMiddleware.execute,
             (req, res) => {
                 this.controller.updateCategoria(req, res)
             });
@@ -49,7 +49,7 @@ class CategoriaRoutes extends RouterCommon<CategoriaController, ValidateMiddlewa
             (req, res, next) => {
                 ValidateMiddlewareDTO.validator(req, res, next, ParamsInputDTO);
             },
-            JWTMiddleware.execute,
+            EncryptDataMiddleware.execute,
             (req, res) => {
                 this.controller.deleteCategoria(req, res);
             }

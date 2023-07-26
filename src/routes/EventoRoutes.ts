@@ -3,7 +3,7 @@ import RouterCommon from "../common/RouterCommon";
 import ValidateMiddlewareDTO from "../middleware/ValidateMiddlewareDTO";
 import EventoController, { eventoController } from "../controller/EventoController";
 import EventoInputDTO from "../model/dto/Input/EventoInputDTO";
-import JWTMiddleware from "../middleware/JWTMiddleware";
+import EncryptDataMiddleware from "../middleware/EncryptDataMiddleware";
 import ParamsInputDTO from "../model/dto/Input/ParamsInputDTO";
 
 class EventoRoutes extends RouterCommon<EventoController, ValidateMiddlewareDTO>{
@@ -25,7 +25,7 @@ class EventoRoutes extends RouterCommon<EventoController, ValidateMiddlewareDTO>
             (req, res, next) => {
                 ValidateMiddlewareDTO.validator(req, res, next, ParamsInputDTO);
             },
-            JWTMiddleware.execute,
+            EncryptDataMiddleware.execute,
             (req, res) => {
                 this.controller.getEventoById(req, res);
             });
@@ -34,7 +34,7 @@ class EventoRoutes extends RouterCommon<EventoController, ValidateMiddlewareDTO>
             (req, res, next) => {
                 ValidateMiddlewareDTO.validator(req, res, next, ParamsInputDTO);
             },
-            JWTMiddleware.execute,
+            EncryptDataMiddleware.execute,
             (req, res) => {
                 this.controller.getEventDetails(req, res);
             });
@@ -42,7 +42,7 @@ class EventoRoutes extends RouterCommon<EventoController, ValidateMiddlewareDTO>
             (req, res, next) => {
                 ValidateMiddlewareDTO.validator(req, res, next, ParamsInputDTO);
             },
-            JWTMiddleware.execute,
+            EncryptDataMiddleware.execute,
             (req, res) => {
                 this.controller.getEventsByUbication(req, res);
             });
@@ -50,7 +50,7 @@ class EventoRoutes extends RouterCommon<EventoController, ValidateMiddlewareDTO>
             (req, res, next) => {
                 ValidateMiddlewareDTO.validator(req, res, next, ParamsInputDTO);
             },
-            JWTMiddleware.execute,
+            EncryptDataMiddleware.execute,
             (req, res) => {
                 this.controller.getEventsByCategory(req, res);
             });
@@ -58,7 +58,7 @@ class EventoRoutes extends RouterCommon<EventoController, ValidateMiddlewareDTO>
             (req, res, next) => {
                 ValidateMiddlewareDTO.validator(req, res, next, EventoInputDTO);
             },
-            JWTMiddleware.execute,
+            EncryptDataMiddleware.execute,
             (req, res) => {
                 this.controller.insertEvento(req, res);
             });
@@ -66,7 +66,7 @@ class EventoRoutes extends RouterCommon<EventoController, ValidateMiddlewareDTO>
             (req, res, next) => {
                 ValidateMiddlewareDTO.validator(req, res, next, EventoInputDTO);
             },
-            JWTMiddleware.execute,
+            EncryptDataMiddleware.execute,
             (req, res) => {
                 this.controller.updateEvento(req, res)
             });
@@ -74,7 +74,7 @@ class EventoRoutes extends RouterCommon<EventoController, ValidateMiddlewareDTO>
             (req, res, next) => {
                 ValidateMiddlewareDTO.validator(req, res, next, ParamsInputDTO);
             },
-            JWTMiddleware.execute,
+            EncryptDataMiddleware.execute,
             (req, res) => {
                 this.controller.deleteEvento(req, res);
             });

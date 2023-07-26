@@ -3,7 +3,7 @@ import RouterCommon from "../common/RouterCommon";
 import ValidateMiddlewareDTO from "../middleware/ValidateMiddlewareDTO";
 import ReservaController, { reservaController } from "../controller/ReservaController";
 import ReservaInputDTO from "../model/dto/Input/ReservaInputDTO";
-import JWTMiddleware from "../middleware/JWTMiddleware";
+import EncryptDataMiddleware from "../middleware/EncryptDataMiddleware";
 import ParamsInputDTO from "../model/dto/Input/ParamsInputDTO";
 
 class ReservaRoutes extends RouterCommon<ReservaController, ValidateMiddlewareDTO>{
@@ -13,7 +13,7 @@ class ReservaRoutes extends RouterCommon<ReservaController, ValidateMiddlewareDT
 
     constructor() {
         super(ReservaController, ValidateMiddlewareDTO);
-        this.path = '/Reserva';
+        this.path = '/reserva';
         this.router = Router();
         this.controller = reservaController;
         this.initRoutes();
@@ -25,7 +25,7 @@ class ReservaRoutes extends RouterCommon<ReservaController, ValidateMiddlewareDT
             (req, res, next) => {
                 ValidateMiddlewareDTO.validator(req, res, next, ParamsInputDTO);
             },
-            JWTMiddleware.execute,
+            EncryptDataMiddleware.execute,
             (req, res) => {
                 this.controller.getReservaById(req, res);
             });
@@ -33,7 +33,7 @@ class ReservaRoutes extends RouterCommon<ReservaController, ValidateMiddlewareDT
             (req, res, next) => {
                 ValidateMiddlewareDTO.validator(req, res, next, ParamsInputDTO);
             },
-            JWTMiddleware.execute,
+            EncryptDataMiddleware.execute,
             (req, res) => {
                 this.controller.getUserReservations(req, res);
             });
@@ -41,7 +41,7 @@ class ReservaRoutes extends RouterCommon<ReservaController, ValidateMiddlewareDT
             (req, res, next) => {
                 ValidateMiddlewareDTO.validator(req, res, next, ReservaInputDTO);
             },
-            JWTMiddleware.execute,
+            EncryptDataMiddleware.execute,
             (req, res) => {
                 this.controller.insertReserva(req, res);
             });
@@ -49,7 +49,7 @@ class ReservaRoutes extends RouterCommon<ReservaController, ValidateMiddlewareDT
             (req, res, next) => {
                 ValidateMiddlewareDTO.validator(req, res, next, ReservaInputDTO);
             },
-            JWTMiddleware.execute,
+            EncryptDataMiddleware.execute,
             (req, res) => {
                 this.controller.updateReserva(req, res)
             });
@@ -57,7 +57,7 @@ class ReservaRoutes extends RouterCommon<ReservaController, ValidateMiddlewareDT
             (req, res, next) => {
                 ValidateMiddlewareDTO.validator(req, res, next, ParamsInputDTO);
             },
-            JWTMiddleware.execute,
+            EncryptDataMiddleware.execute,
             (req, res) => {
                 this.controller.deleteReserva(req, res);
             }

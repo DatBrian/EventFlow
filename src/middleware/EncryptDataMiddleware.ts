@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { SignJWT } from 'jose';
 import env from "../config/EnvConfig";
 
-class JWTMiddleware {
+class EncryptDataMiddleware {
     async execute(req: Request, res: Response, next: NextFunction) {
         try {
             //* Generando el JWT
@@ -21,4 +21,4 @@ class JWTMiddleware {
         }
     }
 }
-export default new JWTMiddleware();
+export default new EncryptDataMiddleware();

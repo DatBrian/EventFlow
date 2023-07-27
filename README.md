@@ -323,8 +323,15 @@ Para validar los datos de entrada y para cambiar los nombres de los datos de sal
     ![Alt text](resources/screenshots/routevalidate.png)
     Como se puede ver en la imagen se llama el método del middleware con los parámetros necesarios incluyendo el **DTO** a validar.
 
+## - Autenticación de rutas
+### Para la autenticación de rutas se utilizó JWT de la siguiente manera, se definieron dos EndPoints relacionados a la autenticación que son los siguientes:
+![jwtEndpoints](./resources/screenshots/jwtEndpoints.png)
+
+### El primer EndPoint se encarga de obtener los tokens vigentes mientras que el segundo se utiliza para geenerar un nuevo token, estos token se deben guarar ya que todas las consultas los piden para poder ejecutarse, para esto deberán pegar el token en un header ***Authentication***, esto debido al middleware AuthJWTMiddleware el cual contiene tanto la función de generar como la de obtener.
+
 # **EndPoints:**
-### Todos los **EndPoints** disponibles se muestran en la consola al ejecutar el comando indicado en la sección de inicialización, a continuación se dará una breve explicacion de lo que hacen.
+
+### Todos los **EndPoints** disponibles se muestran en la consola al ejecutar el comando indicado en la sección de inicialización, a continuación se dará una breve explicacion de lo que hacen.!
 
 
 ### **http://"***tu host***":***"tu puerto"***/api/v1/{nombre de la entidad}** -> Esta es la estructura base de los EndPoints y a partir de ahi se empezarán a construir.

@@ -66,9 +66,24 @@ La estructura del backend que voy a entregar será las tablas de usuario, evento
 npm install
 ```
 
-3. Crea la base de datos: tendrás que crear una base de datos donde almacenarás el script utilizado aqui, el nombre puede ser de tu preferencia
+3. Crea la base de datos: tendrás que crear una base de datos donde almacenarás el script utilizado aqui, el nombre puede ser de tu preferencia,
+    Ejemplo: 
+```
+CREATE DATABASE db_prueba;
+```
 
-4. Importa la base de datos: en el directorio raíz encontrarás un archivo [backup.sql](backup.sql) el cual solo tendrás que ejecutarlo en una consola de mysql dentro de la base de datos que creaste en el punto anterior.
+4. Importa la base de datos: en el directorio raíz encontrarás un archivo [backup.sql](backup.sql), para utilizarlo debes seguir los siguientes pasos:
+    - Entrar a tu consola con mysql y usar la base de datos vacía donde vas a realizar la importación,
+    ***Ejemplo***:
+    ```
+    USE db_prueba;
+    ```
+    - Copia todo el contenido del archivo [backup.sql](backup.sql), asegurate de seleccionar y copiar todo.
+    - Pega todo el script copiado en la consola, asegurate de que estés usando la base de datos.
+    - Para comprobar que el dump se realizó completamte puedes ejecutar un comando de prueba en la misma consola, Ejemplo:
+    ```
+    SHOW TABLES;
+    ```
 
 5. Cambia el nombre del archivo [.env-example](.env-example) a **.env**
 

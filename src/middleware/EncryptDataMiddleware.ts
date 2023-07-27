@@ -3,7 +3,7 @@ import { SignJWT } from 'jose';
 import env from "../config/EnvConfig";
 
 class EncryptDataMiddleware {
-    async execute(req: Request, res: Response, next: NextFunction) {
+    public async execute(req: Request, res: Response, next: NextFunction) {
         try {
             //* Generando el JWT
             const encoder = new TextEncoder();

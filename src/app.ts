@@ -3,9 +3,12 @@ import { RoutesInterface } from "./interfaces/RoutesInterface";
 import routemap from "express-routemap";
 import env from "./config/EnvConfig";
 import chalk from "chalk";
+import session from "express-session";
 import { PoolConnection } from "mysql2/promise";
 import { Connection } from "./db/ConnectionDB";
 import cookieParser from 'cookie-parser';
+import { authJWTMiddleware } from "./middleware/AuthJTWMiddleware";
+import { authRoutes } from "./routes/AuthRoutes";
 
 
 class App extends Connection {
@@ -51,11 +54,17 @@ class App extends Connection {
     private initMiddlewares() {
         this.app.use(express.json());
         this.app.use(cookieParser());
+        this.app.use(session({
+            secret: 'env.JWT_PRIVATE_KEY',
+            resave: false,
+            saveUninitialized: true,
+        }));
     }
 
     private initRoutes(routes: RoutesInterface[]) {
+        this.app.use(`/api/${env.API_VERSION}`, authRoutes.router);
         routes.forEach((route) => {
-            this.app.use(`/api/${env.API_VERSION}`, route.router)
+            this.app.use(`/api/${env.API_VERSION}`, authJWTMiddleware.validateToken, route.router)
         });
     }
 
@@ -68,7 +77,7 @@ class App extends Connection {
             console.log(chalk.blue('--------------------------------------------------------------------------------'));
             console.log(chalk.green.bold(`🚀 ¡El servidor se ha levantado exitosamente en http://${env.HOST}:${env.PORT}!`));
             console.log(chalk.blue('--------------------------------------------------------------------------------'));
-        })
+        });
     }
 }
 export default App;

@@ -359,13 +359,13 @@ Para validar los datos de entrada y para cambiar los nombres de los datos de sal
 
 ## Otros casos con este método:
 
-- #### ![EventDetails](resources\screenshots\eventDetails.png) -> Este EndPoint se utiliza para obtener todos los eventos con sus detalles desglosados, es decir todos los datos de ubicación y no solo el nombre, como se puede observar al finalizar tiene ***/all*** por lo qqqquqe obtendrá todos los resultados y en este caso todos los eventos.
+- #### ![EventDetails](resources/screenshots/eventDetails.png) -> Este EndPoint se utiliza para obtener todos los eventos con sus detalles desglosados, es decir todos los datos de ubicación y no solo el nombre, como se puede observar al finalizar tiene ***/all*** por lo qqqquqe obtendrá todos los resultados y en este caso todos los eventos.
 
-- #### ![EventDetailsId](resources\screenshots\eventDetailsID.png) -> Este EndPoint cumple la misma funcionalidad del anterior solo que se podrán ver los detalles de un solo evento y no de todos los disponibles tal y como se explicó anterior mente el funcionamiento de la terminación en ***/id***.
+- #### ![EventDetailsId](resources/screenshots/eventDetailsID.png) -> Este EndPoint cumple la misma funcionalidad del anterior solo que se podrán ver los detalles de un solo evento y no de todos los disponibles tal y como se explicó anterior mente el funcionamiento de la terminación en ***/id***.
 
-- #### ![EventoUbicacion](resources\screenshots\eventoUbicacion.png) -> Este EndPoint permite obtener todos los eventos de una ubicación específica, debe pasarse en el body un dato "ubication" con el nombre de la ubicacion con la que se van a filtrar los resultados.
+- #### ![EventoUbicacion](resources/screenshots/eventoUbicacion.png) -> Este EndPoint permite obtener todos los eventos de una ubicación específica, debe pasarse en el body un dato "ubication" con el nombre de la ubicacion con la que se van a filtrar los resultados.
 
-- #### ![EventoCategoria](resources\screenshots\EventoCategoria.png) -> Este EndPoint permite obtener todos los eventos de una categoría específica, debe pasarse en el body un dato "category" con el nombre de la categoria con la que se van a filtrar los resultados
+- #### ![EventoCategoria](resources/screenshots/EventoCategoria.png) -> Este EndPoint permite obtener todos los eventos de una categoría específica, debe pasarse en el body un dato "category" con el nombre de la categoria con la que se van a filtrar los resultados
 
 ## POST
 

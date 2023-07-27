@@ -16,7 +16,7 @@ La estructura del backend que voy a entregar será las tablas de usuario, evento
 ---
 
 ## Técnologías utilizadas:
-#### Para este proyecto se utilizó el entorno de ejecución **NodeJS** con su framework [ExpressJS](https://expressjs.com/). Para la base de datos se utilizó **MySQL** y la librería [mysql2](https://github.com/sidorares/node-mysql2) para la implementación de la misma en el código, también se utilizaron librerías como [class-transformer](https://github.com/typestack/class-transformer) y [class-validator](https://github.com/typestack/class-validator) para validaciones y dto, por otro lado se implemento JWT con la librería [jose](https://www.npmjs.com/package/jose) en conjunto con cookies utilizando [cookie-parser](https://www.npmjs.com/package/cookie-parser) todo el código está en **TypeScript** para proporcionar un tipado estático.
+#### Para este proyecto se utilizó el entorno de ejecución **NodeJS** con su framework [ExpressJS](https://expressjs.com/). Para la base de datos se utilizó **MySQL** y la librería [mysql2](https://github.com/sidorares/node-mysql2) para la implementación de la misma en el código, también se utilizaron librerías como [class-transformer](https://github.com/typestack/class-transformer) y [class-validator](https://github.com/typestack/class-validator) para validaciones y dto, por otro lado se implemento JWT con la librería [jose](https://www.npmjs.com/package/jose) en conjunto con cookies utilizando [cookie-parser](https://www.npmjs.com/package/cookie-parser) y sesiones con la librería [express-session](https://www.npmjs.com/package/express-session) todo el código está en **TypeScript** para proporcionar un tipado estático.
 ##### (El resto de dependencias se podrán visualizar en el archivo package.json que en su mayoría son de desarrollo ya que las necesarias para producción son las que se acabaron de mencionar.)
 
 ---
@@ -327,7 +327,7 @@ Para validar los datos de entrada y para cambiar los nombres de los datos de sal
 ### Para la autenticación de rutas se utilizó JWT de la siguiente manera, se definieron dos EndPoints relacionados a la autenticación que son los siguientes:
 ![jwtEndpoints](./resources/screenshots/jwtEndpoints.png)
 
-### El primer EndPoint se encarga de obtener los tokens vigentes mientras que el segundo se utiliza para geenerar un nuevo token, estos token se deben guarar ya que todas las consultas los piden para poder ejecutarse, para esto deberán pegar el token en un header ***Authentication***, esto debido al middleware AuthJWTMiddleware el cual contiene tanto la función de generar como la de obtener.
+### El primer EndPoint se encarga de obtener los tokens vigentes mientras que el segundo se utiliza para geenerar un nuevo token, estos token se deben guarar ya que todas las consultas los piden para poder ejecutarse, para esto deberán pegar el token en un header ***Authentication***, esto debido al middleware AuthJWTMiddleware el cual contiene tanto la función de generar como la de obtener, también se hizo uso de sesiones para guardar el token de manera más óptima.
 
 # **EndPoints:**
 
